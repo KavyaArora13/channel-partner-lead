@@ -8,7 +8,7 @@ const LeadsTable = () => {
 
     useEffect(() => {
         const fetchLeads = async () => {
-            const response = await axios.get('http://localhost:5000/api/leads');
+            const response = await axios.get('http://localhost:5000/leads');
             setLeads(response.data);
         };
         fetchLeads();
