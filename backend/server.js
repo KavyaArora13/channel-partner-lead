@@ -2,23 +2,21 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-require('dotenv').config(); // To load environment variables from a .env file
-const mongoUri = process.env.MONGO_URI;
 const app = express();
 const PORT = process.env.PORT || 5005;
 
-// Middleware
+
 app.use(cors());
 app.use(bodyParser.json());
 
-// MongoDB Atlas connection
-mongoose.connect(process.env.MONGO_URI, {
+
+mongoose.connect('mongodb+srv://kavyaarora1302:Kavya13@channel-partner-lead.hrfqt.mongodb.net/?retryWrites=true&w=majority&appName=channel-partner-lead', {
   
 })
 .then(() => console.log('Connected to MongoDB Atlas'))
 .catch(err => console.error('Error connecting to MongoDB Atlas:', err));
 
-// Schema for leads
+
 const leadSchema = new mongoose.Schema({
     channelPartnerCode: String,
     leadName: String,
@@ -31,12 +29,11 @@ const leadSchema = new mongoose.Schema({
 
 const Lead = mongoose.model('Lead', leadSchema);
 
-// Routes
 app.get('/', (req, res) => {
     res.send('Welcome to the Channel Partner Lead Management System API');
 });
 
-// Create a new lead
+
 app.post('/leads', async (req, res) => {
     
     try {
@@ -48,7 +45,6 @@ app.post('/leads', async (req, res) => {
     }
 });
 
-// Get all leads
 app.get('/leads', async (req, res) => {
     try {
         const leads = await Lead.find();
@@ -58,7 +54,7 @@ app.get('/leads', async (req, res) => {
     }
 });
 
-// Start the server
+
 app.listen(PORT, () => {
     console.log(Server is running on port ${PORT});
 });
