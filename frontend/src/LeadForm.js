@@ -16,6 +16,8 @@ const LeadForm = () => {
 
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^[0-9]{10}$/;
 
     const handleChange = (e) => {
         setLeadData({
@@ -26,8 +28,19 @@ const LeadForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!emailRegex.test(leadData.email)) {
+            setError('Please enter a valid email address.');
+            return;
+        }
+
+        // Validate phone number
+        if (!phoneRegex.test(leadData.contactNumber)) {
+            setError('Please enter a valid 10-digit phone number.');
+            return;
+        }
         try {
-            const response = await axios.post('http://localhost:5001/api/leads', leadData);
+            const response = await axios.post('http://localhost:5005/leads', leadData);
+            console.log(response);
             if (response.status === 200) {
                 setMessage('Lead submitted successfully!');
                 setError('');
@@ -135,6 +148,7 @@ const LeadForm = () => {
                                         value={leadData.additionalNotes}
                                         onChange={handleChange}
                                         rows={3}
+                                        required
                                     />
                                 </Form.Group>
 
