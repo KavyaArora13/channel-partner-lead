@@ -33,7 +33,7 @@ const LeadForm = () => {
             return;
         }
 
-        // Validate phone number
+
         if (!phoneRegex.test(leadData.contactNumber)) {
             setError('Please enter a valid 10-digit phone number.');
             return;
